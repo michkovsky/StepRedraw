@@ -3,10 +3,13 @@ using SkiaSharp.Views.Forms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using SkiaSharp.Extended.Svg;
 
 namespace StepRedraw
 {
@@ -19,9 +22,21 @@ namespace StepRedraw
                 action.Invoke(point);
                 return acc;
             });
+        private static readonly string svgPath = @"https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/atom.svg";
+        private Lazy<SkiaSharp.Extended.Svg.SKSvg> sKSvg = new Lazy<SkiaSharp.Extended.Svg.SKSvg>(() =>
+        {
+            var svg = new SkiaSharp.Extended.Svg.SKSvg();
+            using (var client = new WebClient())
+            using (var ms = new MemoryStream(client.DownloadData(new Uri(svgPath))))
+            {
+                svg.Load(ms);
+            }
+            return svg;
+        });
         public MainPage()
         {
             InitializeComponent();
+
         }
         List<SKPath> paths = new List<SKPath>();
         SKPath path = new SKPath();
@@ -43,7 +58,9 @@ namespace StepRedraw
 
             paths.ForEach(p => canvas.DrawPath(p, paint));
             if(null!=path) canvas.DrawPath(path, paint);
+            canvas.DrawPicture(sKSvg.Value.Picture);
             //canvas.DrawCircle(info.Width / 2, info.Height / 2, 100, paint);
+            
 
         }
 
@@ -83,6 +100,7 @@ namespace StepRedraw
 
             // update the UI
             ((SKCanvasView)sender).InvalidateSurface();
+            
         }
     }
 }
