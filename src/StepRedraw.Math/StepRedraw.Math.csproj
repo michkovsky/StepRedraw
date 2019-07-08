@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>StepRedraw.TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.8.1" />
+  </ItemGroup>
 
 </Project>
