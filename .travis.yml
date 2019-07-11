@@ -5,5 +5,5 @@ dotnet: 2.2
 install:
 - dotnet restore StepRedraw.UWP.sln
 script:
-- dotnet build StepRedraw.UWP.sln
+- dotnet build -c Travis StepRedraw.UWP.sln
 - dotnet test tests/StepRedraw.Math.Tests/StepRedraw.Math.Tests.csproj
