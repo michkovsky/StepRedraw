@@ -66,11 +66,5 @@ namespace StepRedraw.Math.Tests
             var intersect_D = line_A_B.Intersect(perp_C);
             Assert.Equal(expected, intersect_D, new Line.VectorEqualityComparer());
         }
-        [Fact(DisplayName = "My Test fail")]
-        public void Mf()
-        {
-            Assert.True(false);
-        }
-
     }
 }
